@@ -20,7 +20,7 @@ function App() {
 
   return (
     <main>
-      <h1>My todos</h1>
+      <h1>My Blog Posts</h1>
       <button onClick={createBlogPost}>+ new</button>
       <ul>
         {blogPosts.map((post) => (
@@ -28,11 +28,6 @@ function App() {
         ))}
       </ul>
       <div>
-        🥳 App successfully hosted. Try creating a new blog post.
-        <br />
-        <a href="https://docs.amplify.aws/react/start/quickstart/#make-frontend-updates">
-          Review next step of this tutorial.
-        </a>
       </div>
     </main>
   );
