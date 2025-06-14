@@ -14,6 +14,12 @@ function App() {
   }, []);
 
   function createBlogPost() {
+    client.mutations.addPost({
+      title: "My Post",
+      content: "My Content",
+      author: "Chris",
+    });
+
     client.models.BlogPost.create({
       content: window.prompt("Blog post content")});
   }
