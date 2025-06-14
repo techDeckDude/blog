@@ -50,6 +50,21 @@ const schema = a.schema({
         entry: "./addPost.js",
       })
     ),
+    addBlogPost: a
+    .mutation()
+    .arguments({
+      id: a.id(),
+      title: a.string().required(),
+      content: a.string().required(),
+    })
+    .returns(a.ref("BloPostType"))
+    .authorization(allow => [allow.publicApiKey()])
+    .handler(
+      a.handler.custom({
+        dataSource: "ExternalPostTableDataSource",
+        entry: "./addBlogPost.js",
+      })
+    ),
 });
 
 export type Schema = ClientSchema<typeof schema>;
