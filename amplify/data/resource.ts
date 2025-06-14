@@ -11,6 +11,21 @@ const schema = a.schema({
   .customType({
     title: a.string().required(),
     content: a.string().required()
+  }),
+  Todo: a
+    .model({
+      content: a.string(),
+    })
+    .authorization(allow => [allow.publicApiKey()]),
+  Post: a.customType({
+    id: a.id().required(),
+    author: a.string().required(),
+    title: a.string(),
+    content: a.string(),
+    url: a.string(),
+    ups: a.integer(),
+    downs: a.integer(),
+    version: a.integer(),
   })
 });
 
