@@ -8,15 +8,18 @@ export const backend = defineBackend({
   data,
 });
  
+
 const externalDataSourcesStack = backend.createStack("MyExternalDataSources");
+
 
 const externalTable = aws_dynamodb.Table.fromTableName(
   externalDataSourcesStack,
-  "MyExternalBlogPostTypeTable",
-  "BlogPostType"
+  "MyExternalPostTable",
+  "BlogPostTable"
 );
 
+
 backend.data.addDynamoDbDataSource(
-  "ExternalBlogPostTypeTableDataSource",
+  "ExternalPostTableDataSource",
   externalTable
 );

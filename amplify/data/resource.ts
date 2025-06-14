@@ -8,10 +8,10 @@ specifies that any user authenticated via an API key can "create", "read",
 =========================================================================*/
 const schema = a.schema({
   BlogPostType: a
-  .customType({
-    title: a.string().required(),
-    content: a.string().required()
-  }),
+    .customType({
+      title: a.string().required(),
+      content: a.string().required()
+    }),
   BlogPost: a
     .model({
       // id: a.id(), // unique id of the blog post
@@ -31,7 +31,25 @@ const schema = a.schema({
     ups: a.integer(),
     downs: a.integer(),
     version: a.integer(),
-  })
+  }),
+  
+  addPost: a
+    .mutation()
+    .arguments({
+      id: a.id(),
+      author: a.string().required(),
+      title: a.string(),
+      content: a.string(),
+      url: a.string(),
+    })
+    .returns(a.ref("Post"))
+    .authorization(allow => [allow.publicApiKey()])
+    .handler(
+      a.handler.custom({
+        dataSource: "ExternalPostTableDataSource",
+        entry: "./addPost.js",
+      })
+    ),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -52,7 +70,7 @@ Go to your frontend source code. From your client-side code, generate a
 Data client to make CRUDL requests to your table. (THIS SNIPPET WILL ONLY
 WORK IN THE FRONTEND CODE FILE.)
 
-Using JavaScript or Next.js React Server Components, Middleware, Server 
+Using JavaScript or Next.js React Server Components, Middleware, Server
 Actions or Pages Router? Review how to generate Data clients for those use
 cases: https://docs.amplify.aws/gen2/build-a-backend/data/connect-to-API/
 =========================================================================*/
