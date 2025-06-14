@@ -12,9 +12,14 @@ const schema = a.schema({
     title: a.string().required(),
     content: a.string().required()
   }),
-  Todo: a
+  BlogPost: a
     .model({
-      content: a.string(),
+      // id: a.id(), // unique id of the blog post
+      // userId: a.string(), // unique id of the user who created the blog post
+      content: a.string(), // actual content of the blog post
+      // createdDate: a.datetime(), // date the blog post was created
+      // modifiedDate: a.datetime(), // date the blog post was last updated
+      // likes: a.integer(), // number of likes
     })
     .authorization(allow => [allow.publicApiKey()]),
   Post: a.customType({
