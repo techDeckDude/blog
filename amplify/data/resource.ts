@@ -57,7 +57,7 @@ const schema = a.schema({
       title: a.string().required(),
       content: a.string().required(),
     })
-    .returns(a.ref("BloPostType"))
+    .returns(a.ref("BlogPostType"))
     .authorization(allow => [allow.publicApiKey()])
     .handler(
       a.handler.custom({
