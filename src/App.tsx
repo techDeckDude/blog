@@ -5,23 +5,24 @@ import { generateClient } from "aws-amplify/data";
 const client = generateClient<Schema>();
 
 function App() {
-  const [blogPosts, setBlogPosts] = useState<Array<Schema["BlogPost"]["type"]>>([]);
+  const [blogPosts, setBlogPosts] = useState<Array<Schema["BlogPostType"]["type"]>>([]);
 
   useEffect(() => {
-    client.models.BlogPost.observeQuery().subscribe({
-      next: (data) => setBlogPosts([...data.items]),
-    });
+    // client.models.BlogPostType.observeQuery().subscribe({
+    //   next: (data) => setBlogPosts([...data.items]),
+    // });
   }, []);
 
   function createBlogPost() {
-    client.mutations.addPost({
-      title: "My Post",
-      content: "My Content",
-      author: "Chris",
+    const title = ""+window.prompt("Enter a title for your post");
+    const content = ""+window.prompt("Enter the content for your post");
+    const post = client.mutations.addBlogPost({
+      title: title,
+      content: content
     });
-
-    client.models.BlogPost.create({
-      content: window.prompt("Blog post content")});
+    setBlogPosts(post);
+    // client.models.BlogPost.create({
+    //   content: window.prompt("Blog post content")});
   }
 
   return (

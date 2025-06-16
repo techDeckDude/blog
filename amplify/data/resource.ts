@@ -9,47 +9,11 @@ specifies that any user authenticated via an API key can "create", "read",
 const schema = a.schema({
   BlogPostType: a
     .customType({
+      id: a.id(),
       title: a.string().required(),
       content: a.string().required()
     }),
-  BlogPost: a
-    .model({
-      // id: a.id(), // unique id of the blog post
-      // userId: a.string(), // unique id of the user who created the blog post
-      content: a.string(), // actual content of the blog post
-      // createdDate: a.datetime(), // date the blog post was created
-      // modifiedDate: a.datetime(), // date the blog post was last updated
-      // likes: a.integer(), // number of likes
-    })
-    .authorization(allow => [allow.publicApiKey()]),
-  Post: a.customType({
-    id: a.id().required(),
-    author: a.string().required(),
-    title: a.string(),
-    content: a.string(),
-    url: a.string(),
-    ups: a.integer(),
-    downs: a.integer(),
-    version: a.integer(),
-  }),
-  
-  addPost: a
-    .mutation()
-    .arguments({
-      id: a.id(),
-      author: a.string().required(),
-      title: a.string(),
-      content: a.string(),
-      url: a.string(),
-    })
-    .returns(a.ref("Post"))
-    .authorization(allow => [allow.publicApiKey()])
-    .handler(
-      a.handler.custom({
-        dataSource: "ExternalPostTableDataSource",
-        entry: "./addPost.js",
-      })
-    ),
+
     addBlogPost: a
     .mutation()
     .arguments({
