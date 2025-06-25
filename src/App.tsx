@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
+import "./App.css";
 
 const client = generateClient<Schema>();
 
@@ -14,27 +15,32 @@ function App() {
   }, []);
 
   function createBlogPost() {
-    client.mutations.addPost({
-      title: "My Post",
-      content: "My Content",
-      author: "Chris",
-    });
-
-    client.models.BlogPost.create({
-      content: window.prompt("Blog post content")});
+    const content = window.prompt("Enter your blog post content:");
+    if (content && content.trim()) {
+      client.models.BlogPost.create({
+        content: content.trim()
+      });
+    }
   }
 
   return (
-    <main>
+    <main className="blog-container">
       <h1>My Blog Posts</h1>
-      <button onClick={createBlogPost}>+ new</button>
-      <ul>
-        {blogPosts.map((post) => (
-          <li key={post.id}>{post.content}</li>
-        ))}
-      </ul>
-      <div>
-      </div>
+      <button onClick={createBlogPost}>✍️ Create New Post</button>
+      
+      {blogPosts.length > 0 ? (
+        <ul className="blog-posts-list">
+          {blogPosts.map((post) => (
+            <li key={post.id}>
+              {post.content}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="empty-state">
+          No blog posts yet. Click "Create New Post" to get started!
+        </div>
+      )}
     </main>
   );
 }
