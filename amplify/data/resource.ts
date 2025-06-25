@@ -13,7 +13,7 @@ const schema = a.schema({
       title: a.string().required(),
       content: a.string().required(),
     })
-    .returns(a.ref("BlogPostType"))
+    .returns(a.ref("BlogPost"))
     .authorization(allow => [allow.publicApiKey()])
     .handler(
       a.handler.custom({
