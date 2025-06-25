@@ -2,10 +2,9 @@ import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
 const schema = a.schema({
   BlogPost: a
-    .model({
+    .customType({
       content: a.string(),
-    })
-    .authorization(allow => [allow.publicApiKey()]),
+    }),
     addBlogPost: a
     .mutation()
     .arguments({
